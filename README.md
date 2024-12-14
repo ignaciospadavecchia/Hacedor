@@ -1,10 +1,5 @@
 <table>
     <tr>
-        <td width="1200">
-           <img src="https://avisame-app.herokuapp.com/images/logo_avisame.svg"/>
-        </td>
-    </tr>
-    <tr>
         <td>
             <div align="center">
                 <h2>Hacedor</h2>
