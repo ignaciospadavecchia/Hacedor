@@ -1,0 +1,55 @@
+<!-- <!-MENU NAVBAR -->
+<div class="d-flex flex-row flex-nowrap flex-sm-column align-items-center sticky-top ">
+  <% if(title === "Workspace" || title === "Papelera") { %> 
+    <a href="/" class="d-block p-3 link-dark text-decoration-none" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasWithBothOptions" aria-controls="offcanvasWithBothOptions" data-bs-placement="right"
+      data-bs-original-title="Icon-only">
+      <i class="bi bi-filter-square-fill fs-2"></i>
+    </a>
+  <% } %> 
+  <ul class="nav nav-pills nav-flush flex-sm-column flex-row flex-nowrap mb-auto mx-auto text-center justify-content-between w-100 px-3 align-items-center">
+
+    <div class="dropdown">
+      <a title="Menú usuario" href="#"
+        class="d-block align-items-center justify-content-center p-3 link-dark text-decoration-none"
+        id="dropdownUser4" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi-person-circle h2"></i>
+      </a>
+        <ul style="width: 17em;" class="pb-0 dropdown-menu text-small shadow text-center " aria-labelledby="dropdownUser4">
+          
+          <li style="height: 8em;" class="d-flex align-items-center justify-content-center"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" alt="user" class="rounded-circle" width="80"></li>
+          <hr class="m-0">
+          <% if(user) { %> 
+            <a class="dropdown-item" href="/"><li class="d-flex align-items-center justify-content-center" style="height: 2.5em;">Nuevo Proyecto</li></a>
+            <hr class="m-0">
+            <a class="dropdown-item" href="/user/profile"><li class="d-flex align-items-center justify-content-center" style="height: 2.5em;">Perfíl</li></a>
+            <hr class="m-0">
+            <a class="dropdown-item" href="/user/logout"><li class="d-flex align-items-center justify-content-center" style="height: 2.5em;">Cerrar Sesión</li></a>
+            <% } else { %> 
+            <a class="dropdown-item" href="/user/login"><li class="d-flex align-items-center justify-content-center" style="height: 2.5em;">Iniciar sesión</li></a>
+            <hr class="m-0">
+            <a class="dropdown-item" href="/user/signup"><li class="d-flex align-items-center justify-content-center" style="height: 2.5em;">Registro</li></a>
+            <% } %>  
+
+        </ul>
+    </div>
+
+    <li>
+        <div>
+          <a title="Quiénes somos" href="/team/hello" class="nav-link py-3 px-2" data-bs-toggle="tooltip" data-bs-placement="right"
+          data-bs-original-title="Customers">
+          <i class="bi bi-award fs-1"></i>
+          </a>
+        </div>
+    </li>
+    <li>
+        <div>
+          <a href="/" class="nav-link py-3 px-2" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+          data-bs-original-title="Customers">
+            <img src="/images/logo_avisame.png" width="100" class="logo img justify-content-between" alt="Logo Avisa.me">
+          </a>
+        </div>
+    </li>
+  </ul>
+   
+</div>

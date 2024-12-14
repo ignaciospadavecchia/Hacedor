@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title></title>
+    <%- include("./partials/_head")  %>     
+  </head>
+  
+  <body>
+
+        <!-- Inicio contenedor -->
+    <div class="container-fluid">
+
+      <!-- Única fila | Todo el cuerpo -->
+      <div class="row">
+
+          <!-- Columna menu izquierda workspace. Ocupa una sección del grid - 1/12 -->
+          <div  class="col-sm-2 col-md-2 col-lg-1 sticky-top color-primary">
+            <%- include("./partials/navBar")%>
+
+            <!-- MENU LATERAL DESPLEGABLE -->
+            <div class="offcanvas offcanvas-start" style="width:25%;" data-bs-scroll="true" tabindex="-1"
+            id="offcanvasWithBothOptions" aria-labelledby="offcanvasWithBothOptionsLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav">
+                <li class="li">
+                  <a href="/<%= workspace._id %>" class="nav-link py-3 px-2 dropdown-item" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+                  data-bs-original-title="Notes">
+                    <div class="d-flex justify-content-center">
+                      <i class="bi-book fs-3"></i>
+                    </div>
+                  </a>
+                </li>
+                    
+                <li class="li">
+                  <a href="/<%= workspace._id %>/?tasksReminder=true" class="nav-link py-3 px-2 dropdown-item" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+                  data-bs-original-title="Reminder">
+                    <div class="d-flex justify-content-center">
+                      <i class="bi-bell fs-3"></i>
+                    </div>
+                  </a>
+                </li>
+                
+                <li class="li">
+                  <a href="/settings/<%= workspace._id  %>" class="nav-link py-3 px-2 dropdown-item" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+                  data-bs-original-title="Settings">
+                    <div class="d-flex justify-content-center">
+                      <i class="bi-sliders fs-3"></i>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="li">
+                  <a href="/trashspace/<%= workspace._id %>" class="nav-link dropdown-item" title="" data-bs-toggle="tooltip" data-bs-placement="right"
+                    data-bs-original-title="Trash">
+                    <div class="d-flex justify-content-center">
+                      <i class="bi-trash fs-3 "></i>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            </div>
+          <!-- FIN MENU LATERAL DESPLEGABLE -->
+          </div>
+
+          <!-- Columna cuerpo workspace. Ocupa 11 secciones del grid - 11/12 -->
+          <div class="col-sm-10 col-md-10 col-lg-11 p-4 min-vh-100">
+            <%- include("./components/messages")  %> 
+            <% if(registerLink){ %> <a href="/user/signup/<%= workspace._id %>">Regístrese</a> o <a href="/user/login/<%= workspace._id %>">Inicie sesión</a> para añadir este workspace a su colección!<% } %> 
+
+            <div class="col-sm-12 col-md-7 col-lg-5 col-xl-4 d-flex flex-wrap gap-3 mb-3 justify-content-center">
+                <a class="icons" title="Detalles del workspace" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="text-decoration: none;">
+                  <i class="icons bi bi-arrow-bar-down fs-3"></i> Detalles
+                </a> 
+                <% if(user) { %> <!-- Si el usuario está logueado podrá ocultar el workspace  -->
+                  <% if(!workspace.settings.visibility) { %> 
+                    <form action="/settings/updateVisibility" method="POST">
+                      <input type="hidden" name="idWorkspace" value="<%= workspace._id %>">
+                      <a class="icons" onclick="this.parentNode.submit()" title="Click para hacer público este workspace">
+                        <i class="bi bi-eye-slash fs-3"></i> Privado
+                      </a>
+                    </form>
+                  <% } else { %>
+                    <form action="/settings/updateVisibility" method="POST">
+                      <input type="hidden" name="idWorkspace" value="<%= workspace._id %>">
+                      <a class="icons" onclick="this.parentNode.submit()" title="Click para hacer privado este workspace">
+                        <i class="bi bi-eye fs-3"></i> Público
+                      </a>
+                    </form>
+                  <% } %> 
+                <% } %> 
+                <a class="icons" type="button" title="Copia y comparte tu espacio!" id="copyUrlBtn">
+                  <i class="bi bi-clipboard fs-3"></i>
+                  Copiar URL
+                </a> 
+              </div>
+              <div id="copyUrlBox" style="display: none;"> <span>Copiada!</span> <input id="copyURL" width="150px" class="col-sm-12 col-md-4 mb-4" type="text" readonly/></div>
+
+              <div class="collapse" id="collapseExample">
+                <div class="_cardMain _cardInput text-break col-sm-12 col-md-6 col-xl-4 mb-4">
+                  <div class="row">
+                    <div class="col-sm">
+                      <ul><b>Workspace: </b>
+                        <% const updatedAt = new Date(workspace.updatedAt)%>
+                        <% const createdAt = new Date(workspace.createdAt)%>
+                        <li><%= workspace.name %></li>
+                        <li>Modificado: <%= updatedAt.getDate() + "/" + (updatedAt.getMonth() + 1 ) + "/" + updatedAt.getFullYear()%></li>
+                        <li>Creado: <%= createdAt.getDate() + "/" + (createdAt.getMonth() + 1 ) + "/" + createdAt.getFullYear()%></li>
+                      </ul>
+                    </div>
+                    <div class="col-sm ">
+                      <ul><b>Notas:</b>
+                        <li><%= tasksDetail.all.length %> total</li>
+                        <li><%= tasksDetail.active.length %> activas</li>
+                        <li><%= tasksDetail.completed.length %> completadas</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              
+            <!-- Primera fila del cuerpo. Crear primera nota. Centrado -->
+            <div class="d-flex justify-content-center">
+
+              <div class="_cardMain _cardInput text-break" >
+                <form action="/addTask" method="POST">
+                    <input type="hidden" name="idWorkspace" id="idWorkspace" value="<%= workspace._id %>">
+                    <input type="text" name="title" oninput="validarInput()" placeholder="Título" id="title" maxlength="140"><br>
+                    <textarea name="text" oninput="validarInput()" placeholder="Añade una nota" id="text" maxlength="5000"></textarea>
+                    <button type="submit" id="createTask" style="visibility: hidden" class="btn">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
+                </form>
+              </div>
+            </div>
+            
+            <!-- Segunda fila del cuerpo. Todas las notas. Izquierda a derecha -->
+            <div class="d-flex flex-row flex-wrap pt-4 gap-2 ">       
+
+              <%- include("./components/cardEnabled")  %> 
+
+            </div>
+
+            <div class="d-flex flex-row flex-wrap pt-2 gap-2 ">
+     
+              <%- include("./components/cardDisabled")  %> 
+
+            </div>
+
+          </div>
+          
+      </div>
+      <!-- Fin única fila | Todo el cuerpo -->
+  </div>
+  <!-- Fin contenedor -->
+
+  <!-- Scripts globales -->   
+  <%- include("./partials/_scripts")  %> 
+  
+  <!-- Scripts específicos -->
+  <script type="text/javascript" src="/js/taskUpdate.js"></script>
+  <script type="text/javascript" src="/js/workspace.js"></script>
+
+
+  </body>
+  
+</html>
