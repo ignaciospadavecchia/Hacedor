@@ -1,14 +1,6 @@
-<table>
-    <tr></tr>    
-    <tr>
-        <td>
-            <div align="center">
-                <h2>Hacedor</h2>
-                Aplicación para compartir notas y crear recordatorios.
-            </div>     
-        </td>
-    </tr>
-</table> 
+
+<h2>Hacedor</h2>
+Aplicación para compartir notas y crear recordatorios.
 
 ---
 
